@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="PBParser:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/PBParser_jar</output-path>
+    <root id="archive" name="PBParser.jar">
+      <element id="module-output" name="PBParser" />
+    </root>
+  </artifact>
+</component>
