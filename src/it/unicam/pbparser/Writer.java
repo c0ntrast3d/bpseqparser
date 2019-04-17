@@ -9,23 +9,11 @@ import java.util.Calendar;
 import java.util.List;
 import java.util.Objects;
 
-public class Writer {
+class Writer {
     static boolean write(List<BPair> list) {
-/*        Path currentRelativePath = Paths.get("");
-        String s = currentRelativePath.toAbsolutePath().toString();
-        FileWriter writer = null;
-        try {
-            writer = new FileWriter("output.txt");
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        for(BPair pair: arr) {
-            writer.write(str);
-        }
-        writer.close();*/
         Path currentRelativePath = Paths.get("");
         String fileName = currentRelativePath.toAbsolutePath().toString() + "/out" + Calendar.getInstance().getTimeInMillis() + ".txt";
-        PrintWriter pw = null;
+        PrintWriter pw;
         try {
             pw = new PrintWriter(new FileOutputStream(fileName));
         } catch (FileNotFoundException e) {
@@ -33,8 +21,9 @@ public class Writer {
             return false;
         }
         for (BPair pair : list) {
-            pair.print();
-            Objects.requireNonNull(pw).println(String.format("%d %d;", pair.getIndex(), pair.getPair()));
+            //pair.print();
+            if (pair.getPair() != -1)
+                Objects.requireNonNull(pw).println(String.format("%d %d;", pair.getIndex(), pair.getPair()));
         }
         Objects.requireNonNull(pw).close();
         return true;
