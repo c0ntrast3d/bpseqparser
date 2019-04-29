@@ -1,5 +1,7 @@
 package it.unicam.pbparser;
 
+import it.unicam.pbparser.entities.BPair;
+
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.PrintWriter;
@@ -21,7 +23,6 @@ class Writer {
             return false;
         }
         for (BPair pair : list) {
-            //pair.print();
             if (pair.getPair() != -1)
                 Objects.requireNonNull(pw).println(String.format("%d %d;", pair.getIndex(), pair.getPair()));
         }

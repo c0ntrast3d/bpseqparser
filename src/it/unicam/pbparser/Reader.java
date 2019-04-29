@@ -1,5 +1,8 @@
 package it.unicam.pbparser;
 
+import it.unicam.pbparser.entities.BPair;
+import it.unicam.pbparser.exceptions.WrongFormatException;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -21,8 +24,9 @@ class Reader {
 
     private static BPair createFromLine(String line) throws RuntimeException {
         String[] splitLine = line.split(" ");
-        if (isRightFormat(splitLine)) return new BPair(Integer.parseInt(splitLine[0]), splitLine[1].charAt(0), Integer.parseInt(splitLine[2]));
-        else throw new RuntimeException();
+        if (isRightFormat(splitLine))
+            return new BPair(Integer.parseInt(splitLine[0]), splitLine[1].charAt(0), Integer.parseInt(splitLine[2]));
+        else throw new WrongFormatException(line);
     }
 
     static List<BPair> read(String path) {
