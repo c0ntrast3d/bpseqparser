@@ -21,11 +21,10 @@ class Compressor {
                         } else {
                             throw new UnmatchedBasePairException();
                         }
-                    } else if (item.getPair() == 0) {
-                        item.mark();
                     }
                 })
                 .sorted(Comparator.comparing(BPair::getPair))
+                .filter(BPair::pairNotNull)
                 .collect(Collectors.toList());
     }
 

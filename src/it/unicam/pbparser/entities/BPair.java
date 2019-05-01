@@ -31,4 +31,9 @@ public class BPair {
         this.baseName = baseName;
         this.pair = pair;
     }
+
+    @Override
+    public String toString() {
+        return String.format("%d %d;", this.index, this.pair);
+    }
 }
