@@ -19,12 +19,12 @@ class Compressor {
                         if (pair.getPair() == item.getIndex()) {
                             pair.mark();
                         } else {
-                            throw new UnmatchedBasePairException();
+                            throw new UnmatchedBasePairException(item.getIndex(), pair.getIndex());
                         }
                     }
                 })
-                .sorted(Comparator.comparing(BPair::getPair))
                 .filter(BPair::pairNotNull)
+                .sorted(Comparator.comparing(BPair::getPair))
                 .collect(Collectors.toList());
     }
 

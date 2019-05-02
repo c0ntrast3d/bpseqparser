@@ -1,7 +1,7 @@
 package it.unicam.pbparser;
 
 import it.unicam.pbparser.entities.BPair;
-import it.unicam.pbparser.exceptions.WrongFormatException;
+import it.unicam.pbparser.entities.ReaderOutput;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -9,44 +9,38 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
-import static it.unicam.pbparser.Alphabet.isValidBase;
-import static it.unicam.pbparser.Utils.tryParseInt;
+import static it.unicam.pbparser.Utils.tryParseBPair;
 
 class Reader {
 
+    static ReaderOutput read(String path) {
+        StringBuilder heading = new StringBuilder();
+        StringBuilder primaryStructure = new StringBuilder();
+        List<BPair> pairs = new ArrayList<>();
 
-    private static boolean isRightFormat(String[] splitLine) {
-        return (tryParseInt(splitLine[0]) && isValidBase(splitLine[1]) && tryParseInt(splitLine[2]));
-    }
-
-    private static BPair createFromLine(String line) throws RuntimeException {
-        String[] splitLine = line.split(" ");
-        if (isRightFormat(splitLine))
-            return new BPair(Integer.parseInt(splitLine[0]), splitLine[1].charAt(0), Integer.parseInt(splitLine[2]));
-        else throw new WrongFormatException(line);
-    }
-
-    static List<BPair> read(String path) {
-        ArrayList<BPair> res = null;
         try {
             BufferedReader br = Files.newBufferedReader(Paths.get(path));
-            Stream<BPair> lines = br.lines().map(
-                    line -> {
-                        try {
-                            return createFromLine(line);
-                        } catch (Exception e) {
-                            throw new RuntimeException(e);
-                        }
-                    }
-            );
-            res = lines.collect(Collectors.toCollection(ArrayList::new));
-            lines.close();
+            br.lines().forEach(line -> {
+                if (line.contains("#")) {
+                    heading.append(line).append("\n");
+                } else {
+                    final BPair pair = tryParseBPair(line);
+                    pairs.add(pair);
+                    primaryStructure.append(pair.getBaseName());
+                }
+            });
+/*            result = br.lines().map(
+                    Utils::tryParseBPair
+            ).collect(Collectors.toList());
+            br.close();*/
         } catch (IOException io) {
             io.printStackTrace();
         }
-        return res;
+        heading.append("\n");
+        primaryStructure.append("\n\n");
+        return new ReaderOutput(heading.toString(),
+                primaryStructure.toString(),
+                pairs);
     }
 }

@@ -2,50 +2,29 @@ package it.unicam.pbparser;
 
 import it.unicam.pbparser.entities.BPair;
 
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.nio.file.StandardOpenOption;
 import java.util.Calendar;
 import java.util.List;
-import java.util.Objects;
 
 class Writer {
-    static boolean write(List<BPair> list) throws IOException {
+    static void write(String heading, String primaryStructure, List<BPair> list) {
         Path currentRelativePath = Paths.get("");
         String fileName = currentRelativePath.toAbsolutePath().toString() + "/out" + Calendar.getInstance().getTimeInMillis() + ".txt";
-/*        Path currentRelativePath = Paths.get("");
-        String fileName = currentRelativePath.toAbsolutePath().toString() + "/out" + Calendar.getInstance().getTimeInMillis() + ".txt";
-        PrintWriter pw;
+        StringBuilder pairs = new StringBuilder();
+        list.forEach(pairs::append);
+        if (pairs.length() > 0) {
+            pairs.deleteCharAt(pairs.length() - 1);
+        }
         try {
-            pw = new PrintWriter(new FileOutputStream(fileName));
-        } catch (FileNotFoundException e) {
+            Files.write(Paths.get(fileName), heading.getBytes());
+            Files.write(Paths.get(fileName), primaryStructure.getBytes(), StandardOpenOption.APPEND);
+            Files.write(Paths.get(fileName), pairs.toString().getBytes(), StandardOpenOption.APPEND);
+        } catch (IOException e) {
             e.printStackTrace();
-            return false;
-        }*/
-        StringBuilder buffer = new StringBuilder();
-
-/*       list.stream().filter(item -> item.getPair() != -1).forEach(pair ->
-                buffer.append(String.format("%d %d;", pair.getIndex(), pair.getPair()))
-        );*/
-
-/*
-        List<BPair> tmp = list.parallelStream().filter(item -> item.getPair() != -1).collect(Collectors.toList());
-*/
-
-        list.forEach(buffer::append);
-
-/*        for (BPair pair : list) {
-            if (pair.getPair() != -1) {
-                buffer.append(String.format("%d %d;", pair.getIndex(), pair.getPair()));
-            }
-        }*/
-        Files.write(Paths.get(fileName), buffer.toString().getBytes());
-/*        Objects.requireNonNull(pw).println(buffer.toString());
-        Objects.requireNonNull(pw).close();*/
-        return true;
+        }
     }
 }
