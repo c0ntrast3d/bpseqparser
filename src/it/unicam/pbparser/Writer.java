@@ -1,31 +1,30 @@
 package it.unicam.pbparser;
 
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.PrintWriter;
+import it.unicam.pbparser.entities.BPair;
+
+import java.io.IOException;
+import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.nio.file.StandardOpenOption;
 import java.util.Calendar;
 import java.util.List;
-import java.util.Objects;
 
 class Writer {
-    static boolean write(List<BPair> list) {
+    static void write(String heading, String primaryStructure, List<BPair> list) {
         Path currentRelativePath = Paths.get("");
         String fileName = currentRelativePath.toAbsolutePath().toString() + "/out" + Calendar.getInstance().getTimeInMillis() + ".txt";
-        PrintWriter pw;
+        StringBuilder pairs = new StringBuilder();
+        list.forEach(pairs::append);
+        if (pairs.length() > 0) {
+            pairs.deleteCharAt(pairs.length() - 1);
+        }
         try {
-            pw = new PrintWriter(new FileOutputStream(fileName));
-        } catch (FileNotFoundException e) {
+            Files.write(Paths.get(fileName), heading.getBytes());
+            Files.write(Paths.get(fileName), primaryStructure.getBytes(), StandardOpenOption.APPEND);
+            Files.write(Paths.get(fileName), pairs.toString().getBytes(), StandardOpenOption.APPEND);
+        } catch (IOException e) {
             e.printStackTrace();
-            return false;
         }
-        for (BPair pair : list) {
-            //pair.print();
-            if (pair.getPair() != -1)
-                Objects.requireNonNull(pw).println(String.format("%d %d;", pair.getIndex(), pair.getPair()));
-        }
-        Objects.requireNonNull(pw).close();
-        return true;
     }
 }
