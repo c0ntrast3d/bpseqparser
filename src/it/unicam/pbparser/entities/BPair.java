@@ -15,7 +15,7 @@ public class BPair {
     }
 
     public int realIndex() {
-        return this.pair - 1;
+        return getPair() - 1;
     }
 
     public void mark() {

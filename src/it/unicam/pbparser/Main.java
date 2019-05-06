@@ -2,7 +2,6 @@ package it.unicam.pbparser;
 
 import it.unicam.pbparser.entities.BPair;
 import it.unicam.pbparser.entities.ReaderOutput;
-import javafx.util.Pair;
 
 import java.util.List;
 
@@ -24,6 +23,7 @@ public class Main {
                 start = System.currentTimeMillis();
                 Writer.write(output.getHeading(), output.getPrimaryStructure(), compressed);
                 System.out.println(String.format("Writing took :: %d ms", System.currentTimeMillis() - start));
+                PCGenerator.generate(compressed, output.getPrimaryStructure().length() - 2);
                 //boolean result = Writer.write(Compressor.compress(Reader.read(args[0])));
             }
 
