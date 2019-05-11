@@ -34,4 +34,9 @@ public class ParallelComponent {
     public void setOccurrence(short occurrence) {
         this.occurrence = occurrence;
     }
+
+    @Override
+    public String toString() {
+        return String.format("%d %d %d", this.index, this.pair, this.occurrence);
+    }
 }
