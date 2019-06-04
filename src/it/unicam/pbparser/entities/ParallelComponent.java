@@ -1,17 +1,17 @@
 package it.unicam.pbparser.entities;
 
 public class ParallelComponent {
-    private short index;
-    private short pair;
-    private short occurrence;
+    private int index;
+    private int pair;
+    private int occurrence;
 
-    public ParallelComponent(short index, short pair, short occurrence) {
+    public ParallelComponent(int index, int pair, int occurrence) {
         this.index = index;
         this.pair = pair;
         this.occurrence = occurrence;
     }
 
-    public short getIndex() {
+    public int getIndex() {
         return index;
     }
 
@@ -19,7 +19,7 @@ public class ParallelComponent {
         this.index = index;
     }
 
-    public short getPair() {
+    public int getPair() {
         return pair;
     }
 
@@ -27,16 +27,16 @@ public class ParallelComponent {
         this.pair = pair;
     }
 
-    public short getOccurrence() {
+    public int getOccurrence() {
         return occurrence;
     }
 
-    public void setOccurrence(short occurrence) {
+    public void setOccurrence(int occurrence) {
         this.occurrence = occurrence;
     }
 
     @Override
     public String toString() {
-        return String.format("%d %d %d", this.index, this.pair, this.occurrence);
+        return String.format("(%d,%d,%d);", this.index, this.pair, this.occurrence);
     }
 }

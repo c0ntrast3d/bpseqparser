@@ -1,10 +1,5 @@
 package it.unicam.pbparser;
 
-import it.unicam.pbparser.entities.BPair;
-import it.unicam.pbparser.entities.ReaderOutput;
-
-import java.util.List;
-
 public class Main {
 
     public static void main(String[] args) {
@@ -12,8 +7,8 @@ public class Main {
             if (args[0].isEmpty()) {
                 System.out.println("No file supplied or too many arguments!");
             } else {
-                long start = System.currentTimeMillis();
-                ReaderOutput output = Reader.read(args[0]);
+/*                long start = System.currentTimeMillis();
+                ReaderOutput output = BpseqReader.read(args[0]);
                 System.out.println(String.format("Reading took :: %d ms", System.currentTimeMillis() - start));
 
                 start = System.currentTimeMillis();
@@ -23,8 +18,8 @@ public class Main {
                 start = System.currentTimeMillis();
                 Writer.write(output.getHeading(), output.getPrimaryStructure(), compressed);
                 System.out.println(String.format("Writing took :: %d ms", System.currentTimeMillis() - start));
-                PCGenerator.generate(compressed, output.getPrimaryStructure().length() - 2);
-                //boolean result = Writer.write(Compressor.compress(Reader.read(args[0])));
+                PCGenerator.generate(compressed, output.getPrimaryStructure().length() - 2);*/
+                Controller.start(args[0]);
             }
 
 

@@ -1,5 +1,4 @@
-/*
-package it.unicam.pbparser;
+package it.unicam.pbparser.io;
 
 import it.unicam.pbparser.entities.BPair;
 import it.unicam.pbparser.entities.ReaderOutput;
@@ -10,14 +9,18 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.CompletableFuture;
 
-import static it.unicam.pbparser.Utils.tryParseBPair;
+import static it.unicam.pbparser.utils.BPairParser.tryParseBPair;
 
-class Reader {
 
-    static ReaderOutput read(String path) {
+public class BpseqReader {
+
+
+    public static ReaderOutput read(String path) {
         StringBuilder heading = new StringBuilder();
         StringBuilder primaryStructure = new StringBuilder();
+        //String fileName = path.split(".")[0];
         List<BPair> pairs = new ArrayList<>();
 
         try {
@@ -31,7 +34,6 @@ class Reader {
                     primaryStructure.append(pair.getBaseName());
                 }
             });
-*/
 /*            Files.newBufferedReader(Paths.get(path))
                     .lines()
                     .forEach(item ->
@@ -41,17 +43,22 @@ class Reader {
                                         System.out.println(e.getMessage());
                                         return true;
                                     })
-                    );*//*
-
+                    );*/
             br.close();
         } catch (IOException io) {
             io.printStackTrace();
         }
         heading.append("\n");
         primaryStructure.append("\n\n");
-        return new ReaderOutput(heading.toString(),
+
+        return new ReaderOutput(
+                "",
+                heading.toString(),
                 primaryStructure.toString(),
                 pairs);
     }
+
+    public static CompletableFuture<ReaderOutput> readCF(String file) {
+        return CompletableFuture.supplyAsync(() -> BpseqReader.read(file));
+    }
 }
-*/
