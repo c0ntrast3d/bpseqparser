@@ -14,16 +14,8 @@ public class BPair {
         return pair;
     }
 
-    public int realIndex() {
-        return this.pair - 1;
-    }
-
-    public void mark() {
-        this.pair = -1;
-    }
-
-    public boolean pairNotNull() {
-        return this.pair != 0 && this.pair != -1;
+    public void setPair(short pair) {
+        this.pair = pair;
     }
 
     public BPair(short index, char baseName, short pair) {
@@ -40,4 +32,5 @@ public class BPair {
     public char getBaseName() {
         return baseName;
     }
+
 }

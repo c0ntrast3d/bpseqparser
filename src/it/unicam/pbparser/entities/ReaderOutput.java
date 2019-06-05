@@ -3,7 +3,14 @@ package it.unicam.pbparser.entities;
 import java.util.List;
 
 public class ReaderOutput {
-    private String heading = null;
+    private String heading;
+    private String primaryStructure;
+    private List<BPair> pairs;
+    private String fileName;
+
+    public String getFileName() {
+        return fileName;
+    }
 
     public String getHeading() {
         return heading;
@@ -17,10 +24,9 @@ public class ReaderOutput {
         return pairs;
     }
 
-    private String primaryStructure = null;
-    private List<BPair> pairs = null;
 
-    public ReaderOutput(String heading, String primaryStructure, List<BPair> pairs) {
+    public ReaderOutput(String fileName, String heading, String primaryStructure, List<BPair> pairs) {
+        this.fileName = fileName;
         this.heading = heading;
         this.primaryStructure = primaryStructure;
         this.pairs = pairs;
