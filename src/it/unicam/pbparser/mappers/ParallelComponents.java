@@ -1,20 +1,17 @@
-package it.unicam.pbparser;
+package it.unicam.pbparser.mappers;
 
 import it.unicam.pbparser.entities.BPair;
 import it.unicam.pbparser.entities.ParallelComponent;
 
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.nio.file.StandardOpenOption;
-import java.util.Calendar;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Stack;
+import java.util.stream.Collectors;
 
-class PCGenerator {
-    static List<ParallelComponent> generate(List<BPair> input, int primaryLength) {
+public class ParallelComponents {
+    public static List<ParallelComponent> generate(List<BPair> input, int primaryLength) {
         int[] accumulator = new int[primaryLength];
+        List<BPair> copy = new ArrayList<>(input);
         for (BPair pair : input) {
             final int realIndex = pair.getIndex() - 1;
             final int previous = pair.getIndex() - 2;
@@ -52,16 +49,6 @@ class PCGenerator {
             }
         }
 
-        Path currentRelativePath = Paths.get("");
-        String fileName = currentRelativePath.toAbsolutePath().toString() + "/out" + Calendar.getInstance().getTimeInMillis() + ".pc";
-        StringBuilder pc = new StringBuilder();
-        stack.stream().filter(item -> item.getPair() != -1)
-                .forEach(item -> pc.append(item.toString()));
-        try {
-            Files.write(Paths.get(fileName), pc.toString().getBytes(), StandardOpenOption.CREATE);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return null;
+        return stack.stream().filter(item -> item.getPair() != -1).collect(Collectors.toList());
     }
 }

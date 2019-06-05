@@ -1,5 +1,9 @@
 package it.unicam.pbparser.handlers;
 
-public class MultipleSourceHandler {
+import java.util.Set;
 
+public class MultipleSourceHandler {
+    public static void processDirectory(Set<String> files) {
+        files.forEach(SingleSourceHandler::processFile);
+    }
 }

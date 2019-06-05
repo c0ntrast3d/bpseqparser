@@ -3,10 +3,11 @@ package it.unicam.pbparser.mappers;
 import it.unicam.pbparser.entities.BPair;
 import it.unicam.pbparser.exceptions.UnmatchedBasePairException;
 
+import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class PairsList {
+public class Pairs {
     public static List<BPair> fromBPair(List<BPair> list) {
 
         return list
@@ -22,6 +23,7 @@ public class PairsList {
                     }
                 })
                 .filter(item -> notPairedOrMarked(item.getPair()))
+                .sorted(Comparator.comparing(BPair::getPair))
                 .collect(Collectors.toList());
     }
 

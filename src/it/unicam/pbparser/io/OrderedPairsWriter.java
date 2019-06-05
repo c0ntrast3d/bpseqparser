@@ -4,15 +4,16 @@ import it.unicam.pbparser.entities.BPair;
 
 import java.io.IOException;
 import java.nio.file.Files;
-import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
 import java.util.List;
 
+import static it.unicam.pbparser.utils.FileUtils.generateFileName;
+
 public class OrderedPairsWriter {
     public static boolean write(String name, String heading, String primaryStructure, List<BPair> list) {
 
-        String fileName = generateFileName(Paths.get(""), name);
+        String fileName = generateFileName(Paths.get(""), name, "-ass");
         StringBuilder pairs = new StringBuilder();
 
         list.forEach(pairs::append);
@@ -30,13 +31,4 @@ public class OrderedPairsWriter {
         return false;
     }
 
-    private static String generateFileName(Path path, String name) {
-        return new StringBuilder()
-                .append(path.toAbsolutePath().toString())
-                .append("/")
-                .append(name)
-                .append("-aas")
-                .append(".txt")
-                .toString();
-    }
 }
