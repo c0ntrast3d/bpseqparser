@@ -3,7 +3,6 @@ package it.unicam.pbparser.mappers;
 import it.unicam.pbparser.entities.BPair;
 import it.unicam.pbparser.entities.ParallelComponent;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Stack;
 import java.util.stream.Collectors;
@@ -11,7 +10,6 @@ import java.util.stream.Collectors;
 public class ParallelComponents {
     public static List<ParallelComponent> generate(List<BPair> input, int primaryLength) {
         int[] accumulator = new int[primaryLength];
-        List<BPair> copy = new ArrayList<>(input);
         for (BPair pair : input) {
             final int realIndex = pair.getIndex() - 1;
             final int previous = pair.getIndex() - 2;

@@ -18,7 +18,7 @@ public class Pairs {
                         if (pair.getPair() == item.getIndex()) {
                             markForRemoval(pair);
                         } else {
-                            throw new UnmatchedBasePairException(item.getIndex(), pair.getIndex());
+                            throw new UnmatchedBasePairException(item.getIndex(), pair.getIndex(), pair.getPair());
                         }
                     }
                 })

@@ -20,7 +20,7 @@ public class BpseqReader {
     public static ReaderOutput read(String path) {
         StringBuilder heading = new StringBuilder();
         StringBuilder primaryStructure = new StringBuilder();
-        //String fileName = path.split(".")[0];
+        String fileName = path.split("\\.")[0];
         List<BPair> pairs = new ArrayList<>();
 
         try {
@@ -52,7 +52,7 @@ public class BpseqReader {
         primaryStructure.append("\n\n");
 
         return new ReaderOutput(
-                "",
+                fileName,
                 heading.toString(),
                 primaryStructure.toString(),
                 pairs);

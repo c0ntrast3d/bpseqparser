@@ -23,14 +23,14 @@ public class SingleSourceHandler {
         CompletableFuture.supplyAsync(() -> read(fileName), SingleThreadExecutor.get())
                 .thenComposeAsync(readerOutput ->
                                 CompletableFuture.allOf(
-/*                                CompletableFuture.supplyAsync(() -> Compressor.compress(readerOutput.getPairs()))
-                                        .thenApply((compressed) -> Writer.write(readerOutput.getHeading(), readerOutput.getPrimaryStructure(), compressed))*/
+    /*                                CompletableFuture.supplyAsync(() -> Compressor.compress(readerOutput.getPairs()))
+                                            .thenApply((compressed) -> Writer.write(readerOutput.getHeading(), readerOutput.getPrimaryStructure(), compressed))*/
                                         getOrderedPairsThenWrite(readerOutput),
-/*                                                .thenComposeAsync(orderedPairs -> getParallelComponentsThenWrite(
-                                                        orderedPairs,
-                                                        readerOutput.getPrimaryStructure().length() - 2,
-                                                        readerOutput.getFileName()
-                                                ))*/
+    /*                                                .thenComposeAsync(orderedPairs -> getParallelComponentsThenWrite(
+                                                            orderedPairs,
+                                                            readerOutput.getPrimaryStructure().length() - 2,
+                                                            readerOutput.getFileName()
+                                                    ))*/
                                         getParallelComponentsThenWrite(
                                                 readerOutput.getPairs(),
                                                 readerOutput.getPrimaryStructure().length() - 2,
@@ -53,8 +53,6 @@ public class SingleSourceHandler {
                         .stream()
                         .sorted(Comparator.comparing(BPair::getPair))
                         .collect(Collectors.toList()))
-
-
                 .thenApply((sorted) ->
                         OrderedPairsWriter.write(
                                 input.getFileName(),
@@ -74,6 +72,9 @@ public class SingleSourceHandler {
                 .thenApplyAsync((orderedPairs ->
                         ParallelComponents.generate(orderedPairs, primaryLength)))
                 .thenApply((components) -> ParallelComponentsWriter.write(components, fileName));
+/*        return CompletableFuture.supplyAsync(() ->
+                ParallelComponents.generate(compressed.get(), primaryLength))
+                .thenApply((components) -> ParallelComponentsWriter.write(components, fileName));*/
     }
 
     private static CompletableFuture<?> getSizeThenWrite(ReaderOutput input) {
