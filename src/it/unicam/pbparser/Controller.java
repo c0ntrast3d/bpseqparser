@@ -13,7 +13,9 @@ class Controller {
     static void start(String input) {
         try {
             if (FileUtils.isDirectory(input)) {
+                long start = System.nanoTime();
                 processDirectory(getFilesList(input));
+                System.out.println("All computations made in " + ((System.nanoTime() - start) / 1_000_000) + " msecs");
             } else {
                 long start = System.nanoTime();
                 SingleSourceHandler.processFile(input);

@@ -26,24 +26,36 @@ public class FileUtils {
     }
 
     public static Set<String> getFilesList(String dir) {
-            Set<String> fileList = new HashSet<>();
-            try (DirectoryStream<Path> stream = Files.newDirectoryStream(Paths.get(dir))) {
-                for (Path path : stream) {
-                    if (!Files.isDirectory(path)) {
-                        fileList.add(path.getFileName()
-                                .toString());
-                    }
+        Set<String> fileList = new HashSet<>();
+        try (DirectoryStream<Path> stream = Files.newDirectoryStream(Paths.get(dir))) {
+            for (Path path : stream) {
+                if (!Files.isDirectory(path)) {
+                    fileList.add(
+                            new StringBuilder()
+                                    .append(Paths.get("").toAbsolutePath())
+                                    .append("/")
+                                    .append(dir)
+                                    .append("/")
+                                    .append(path.getFileName())
+                                    .toString()
+                    );
                 }
-            } catch (IOException e) {
-                e.printStackTrace();
             }
+            System.out.println(String.format("GOT FILES :: %s", fileList.toString()));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         return fileList;
+    }
+
+    public static boolean isBpseq(String fileName) {
+        System.out.println(fileName.substring(fileName.lastIndexOf('.') + 1));
+        String ext = fileName.substring(fileName.lastIndexOf('.') + 1);
+        return ext.equals("bpseq");
     }
 
     public static String generateFileName(Path path, String name, String postfix) {
         return new StringBuilder()
-                .append(path.toAbsolutePath().toString())
-                .append("/")
                 .append(name)
                 .append(postfix)
                 .append(".txt")

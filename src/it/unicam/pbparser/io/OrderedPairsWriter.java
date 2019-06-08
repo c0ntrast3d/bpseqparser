@@ -22,8 +22,7 @@ public class OrderedPairsWriter {
             pairs.deleteCharAt(pairs.length() - 1);
         }
         try {
-            System.out.println(String.format("WRITING ORDERED :: %s", Thread.currentThread().getName()));
-
+            System.out.println(String.format("WRITING ORDERED :: %s :: %s", name, Thread.currentThread().getName()));
             Files.write(Paths.get(fileName), heading.getBytes());
             Files.write(Paths.get(fileName), primaryStructure.getBytes(), StandardOpenOption.APPEND);
             Files.write(Paths.get(fileName), pairs.toString().getBytes(), StandardOpenOption.APPEND);

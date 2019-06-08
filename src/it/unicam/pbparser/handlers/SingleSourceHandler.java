@@ -65,7 +65,7 @@ public class SingleSourceHandler {
                                                     ))*/
                                         getParallelComponentsThenWrite(
                                                 compressed,
-                                                readerOutputAtomicReference.get().getPrimaryStructure().length() - 2,
+                                                readerOutputAtomicReference.get().getPrimaryStructure().length(),
                                                 readerOutputAtomicReference.get().getFileName()
                                                 // TODO remove newlines from reader output
                                         )
