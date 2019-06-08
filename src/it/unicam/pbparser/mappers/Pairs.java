@@ -10,7 +10,7 @@ import static java.util.stream.Collectors.toList;
 
 public class Pairs {
 
-    public static List<BPair> fromBPair(List<BPair> list) {
+    public static List<BPair> fromBPair(List<BPair> list, String fileName) {
 
         System.out.println(String.format("COMPRESSING :: %s", Thread.currentThread().getName()));
 
@@ -20,7 +20,7 @@ public class Pairs {
                 if (pair.getPair() == item.getIndex()) {
                     markForRemoval(pair);
                 } else {
-                    throw new UnmatchedBasePairException(item.getIndex(), pair.getIndex(), pair.getPair());
+                    throw new UnmatchedBasePairException(item.getIndex(), pair.getIndex(), pair.getPair(), fileName);
                 }
             }
         })
