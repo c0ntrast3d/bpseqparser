@@ -24,6 +24,12 @@ public class BPair {
         this.pair = pair;
     }
 
+    public BPair(BPair bpair) {
+        this.index = bpair.index;
+        this.baseName = bpair.baseName;
+        this.pair = bpair.pair;
+    }
+
     @Override
     public String toString() {
         return String.format("(%d,%d);", this.index, this.pair);

@@ -9,6 +9,8 @@ import java.util.stream.Collectors;
 
 public class ParallelComponents {
     public static List<ParallelComponent> generate(List<BPair> input, int primaryLength) {
+        System.out.println("PC " + input);
+
         int[] accumulator = new int[primaryLength];
         for (BPair pair : input) {
             final int realIndex = pair.getIndex() - 1;
@@ -34,6 +36,8 @@ public class ParallelComponents {
                 }
             }
         }
+        System.out.println(String.format("GENERATING PC :: %s", Thread.currentThread().getName()));
+
         Stack<ParallelComponent> stack = new Stack<>();
         stack.push(new ParallelComponent(1, accumulator[0], 1));
         for (int counter = 1; counter < accumulator.length; counter++) {

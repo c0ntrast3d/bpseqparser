@@ -15,7 +15,9 @@ class Controller {
             if (FileUtils.isDirectory(input)) {
                 processDirectory(getFilesList(input));
             } else {
+                long start = System.nanoTime();
                 SingleSourceHandler.processFile(input);
+                System.out.println("All computations made in " + ((System.nanoTime() - start) / 1_000_000) + " msecs");
             }
         } catch (FileNotFoundException e) {
             System.out.println("INCORRECT INPUT");

@@ -5,35 +5,36 @@ import it.unicam.pbparser.exceptions.UnmatchedBasePairException;
 
 import java.util.Comparator;
 import java.util.List;
-import java.util.stream.Collectors;
+
+import static java.util.stream.Collectors.toList;
 
 public class Pairs {
+
     public static List<BPair> fromBPair(List<BPair> list) {
 
-        return list
-                .stream()
-                .peek(item -> {
-                    if (notPairedOrMarked(item.getPair())) {
-                        final BPair pair = list.get(pairsIndex(item));
-                        if (pair.getPair() == item.getIndex()) {
-                            markForRemoval(pair);
-                        } else {
-                            throw new UnmatchedBasePairException(item.getIndex(), pair.getIndex(), pair.getPair());
-                        }
-                    }
-                })
+        System.out.println(String.format("COMPRESSING :: %s", Thread.currentThread().getName()));
+
+        return list.stream().peek(item -> {
+            if (notPairedOrMarked(item.getPair())) {
+                final BPair pair = list.get(pairsIndex(item));
+                if (pair.getPair() == item.getIndex()) {
+                    markForRemoval(pair);
+                } else {
+                    throw new UnmatchedBasePairException(item.getIndex(), pair.getIndex(), pair.getPair());
+                }
+            }
+        })
                 .filter(item -> notPairedOrMarked(item.getPair()))
                 .sorted(Comparator.comparing(BPair::getPair))
-                .collect(Collectors.toList());
+                .collect(toList());
+/*                .filter(item -> notPairedOrMarked(item.getPair()))
+                .sorted(Comparator.comparing(BPair::getPair))
+                .collect(toList());*/
     }
 
     private static int pairsIndex(BPair bpair) {
         return bpair.getPair() - 1;
     }
-
-/*
-    private static Function<BPair, Integer> pairIndex = (pair) -> pair.getPair() - 1;
-*/
 
     private static boolean notPairedOrMarked(int pair) {
         return pair != 0 && pair != -1;
@@ -42,4 +43,7 @@ public class Pairs {
     private static void markForRemoval(BPair pair) {
         pair.setPair((short) -1);
     }
+
+    /* private static Function<BPair, Integer> pairIndex = (pair) -> pair.getPair() - 1; */
+
 }

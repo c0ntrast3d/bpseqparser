@@ -24,6 +24,8 @@ public class BpseqReader {
         List<BPair> pairs = new ArrayList<>();
 
         try {
+            System.out.println(String.format("READING :: %s", Thread.currentThread().getName()));
+
             BufferedReader br = Files.newBufferedReader(Paths.get(path));
             br.lines().forEach(line -> {
                 if (line.contains("#")) {
