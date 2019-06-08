@@ -27,9 +27,6 @@ public class Pairs {
                 .filter(item -> notPairedOrMarked(item.getPair()))
                 .sorted(Comparator.comparing(BPair::getPair))
                 .collect(toList());
-/*                .filter(item -> notPairedOrMarked(item.getPair()))
-                .sorted(Comparator.comparing(BPair::getPair))
-                .collect(toList());*/
     }
 
     private static int pairsIndex(BPair bpair) {

@@ -5,7 +5,7 @@ public class Main {
     public static void main(String[] args) {
         try {
             if (args[0].isEmpty()) {
-                System.out.println("No file supplied or too many arguments!");
+                System.out.println("No file/dir supplied");
             } else {
 /*                long start = System.currentTimeMillis();
                 ReaderOutput output = BpseqReader.read(args[0]);

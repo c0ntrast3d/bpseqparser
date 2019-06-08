@@ -25,7 +25,6 @@ public class BpseqReader {
 
         try {
             System.out.println(String.format("READING :: %s", Thread.currentThread().getName()));
-
             BufferedReader br = Files.newBufferedReader(Paths.get(path));
             br.lines().forEach(line -> {
                 if (line.contains("#")) {
@@ -50,8 +49,6 @@ public class BpseqReader {
         } catch (IOException io) {
             io.printStackTrace();
         }
-        heading.append("\n");
-        primaryStructure.append("\n\n");
 
         return new ReaderOutput(
                 fileName,

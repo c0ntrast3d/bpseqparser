@@ -15,16 +15,14 @@ public class OrderedPairsWriter {
 
         String fileName = generateFileName(Paths.get(""), name, "-ass");
         StringBuilder pairs = new StringBuilder();
-        System.out.println(list);
-
         list.forEach(pairs::append);
         if (pairs.length() > 0) {
             pairs.deleteCharAt(pairs.length() - 1);
         }
         try {
-            System.out.println(String.format("WRITING ORDERED :: %s :: %s", name, Thread.currentThread().getName()));
-            Files.write(Paths.get(fileName), heading.getBytes());
-            Files.write(Paths.get(fileName), primaryStructure.getBytes(), StandardOpenOption.APPEND);
+            System.out.println(String.format("WRITING ORDERED :: %s", Thread.currentThread().getName()));
+            Files.write(Paths.get(fileName), heading.concat("\n").getBytes());
+            Files.write(Paths.get(fileName), primaryStructure.concat("\n\n").getBytes(), StandardOpenOption.APPEND);
             Files.write(Paths.get(fileName), pairs.toString().getBytes(), StandardOpenOption.APPEND);
             return true;
         } catch (IOException e) {

@@ -67,7 +67,6 @@ public class SingleSourceHandler {
                                                 compressed,
                                                 readerOutputAtomicReference.get().getPrimaryStructure().length(),
                                                 readerOutputAtomicReference.get().getFileName()
-                                                // TODO remove newlines from reader output
                                         )
                                 )
                 )

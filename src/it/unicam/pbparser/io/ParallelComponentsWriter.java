@@ -12,13 +12,11 @@ import static it.unicam.pbparser.utils.FileUtils.generateFileName;
 
 public class ParallelComponentsWriter {
     public static boolean write(List<ParallelComponent> list, String name) {
-        System.out.println(list);
         String fileName = generateFileName(Paths.get(""), name, "-pc");
         StringBuilder pc = new StringBuilder();
         list.forEach(item -> pc.append(item.toString()));
         try {
             System.out.println(String.format("WRITING PC :: %s", Thread.currentThread().getName()));
-
             Files.write(Paths.get(fileName), pc.toString().getBytes(), StandardOpenOption.CREATE);
             return true;
         } catch (IOException e) {
