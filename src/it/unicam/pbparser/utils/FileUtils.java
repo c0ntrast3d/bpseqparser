@@ -30,18 +30,9 @@ public class FileUtils {
         try (DirectoryStream<Path> stream = Files.newDirectoryStream(Paths.get(dir))) {
             for (Path path : stream) {
                 if (!Files.isDirectory(path)) {
-                    fileList.add(
-                            new StringBuilder()
-                                    .append(Paths.get("").toAbsolutePath())
-                                    .append("/")
-                                    .append(dir)
-                                    .append("/")
-                                    .append(path.getFileName())
-                                    .toString()
-                    );
+                    fileList.add(generatePath(path, dir));
                 }
             }
-            System.out.println(String.format("GOT FILES :: %s", fileList.toString()));
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -49,16 +40,28 @@ public class FileUtils {
     }
 
     public static boolean isBpseq(String fileName) {
-        System.out.println(fileName.substring(fileName.lastIndexOf('.') + 1));
-        String ext = fileName.substring(fileName.lastIndexOf('.') + 1);
-        return ext.equals("bpseq");
+        return fileName.substring(fileName.lastIndexOf('.') + 1).equals("bpseq");
     }
 
     public static String generateFileName(Path path, String name, String postfix) {
         return new StringBuilder()
+                .append(Paths.get("").toAbsolutePath())
+                .append("/")
+                .append("out")
+                .append("/")
                 .append(name)
                 .append(postfix)
                 .append(".txt")
+                .toString();
+    }
+
+    public static String generatePath(Path path, String dir) {
+        return new StringBuilder()
+                .append(Paths.get("").toAbsolutePath())
+                .append("/")
+                .append(dir)
+                .append("/")
+                .append(path.getFileName())
                 .toString();
     }
 }

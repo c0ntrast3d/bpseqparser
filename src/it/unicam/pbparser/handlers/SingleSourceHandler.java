@@ -52,7 +52,7 @@ public class SingleSourceHandler {
         CompletableFuture.supplyAsync(() -> read(fileName), MultiThreadExecutor.get(4))
                 .thenApplyAsync(output -> {
                     readerOutputAtomicReference.set(output);
-                    return Pairs.fromBPair(output.getPairs());
+                    return Pairs.fromBPair(output.getPairs(), output.getFileName());
                 })
                 .thenComposeAsync(compressed ->
                                 CompletableFuture.allOf(
