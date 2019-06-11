@@ -5,8 +5,10 @@ import it.unicam.pbparser.entities.ReaderOutput;
 import it.unicam.pbparser.executors.MultiThreadExecutor;
 import it.unicam.pbparser.io.OrderedPairsWriter;
 import it.unicam.pbparser.io.ParallelComponentsWriter;
+import it.unicam.pbparser.io.WBSizeWriter;
 import it.unicam.pbparser.mappers.Pairs;
 import it.unicam.pbparser.mappers.ParallelComponents;
+import it.unicam.pbparser.mappers.Sizes;
 
 import java.util.Comparator;
 import java.util.List;
@@ -67,6 +69,11 @@ public class SingleSourceHandler {
                                                 compressed,
                                                 readerOutputAtomicReference.get().getPrimaryStructure().length(),
                                                 readerOutputAtomicReference.get().getFileName()
+                                        ),
+                                        getSizeThenWrite(
+                                                compressed,
+                                                readerOutputAtomicReference.get().getPrimaryStructure(),
+                                                readerOutputAtomicReference.get().getFileName()
                                         )
                                 )
                 )
@@ -83,7 +90,7 @@ public class SingleSourceHandler {
         return CompletableFuture.supplyAsync(() -> Pairs.fromBPair(input.getPairs()))
                 .thenApplyAsync((pairsList) -> pairsList
                         .stream()
-                        .sorted(Comparator.comparing(BPair::getPair))
+                        .sorted(Comparator.comparing(BPair::getArkLength))
                         .collect(Collectors.toList()))
                 .thenApply((sorted) ->
                         OrderedPairsWriter.write(
@@ -92,7 +99,7 @@ public class SingleSourceHandler {
                                 input.getPrimaryStructure(),
                                 sorted));
 *//*                .thenApply(compressed -> {
-                    final List<BPair> sorted = compressed.stream().sorted(Comparator.comparing(BPair::getPair)).collect(Collectors.toList());
+                    final List<BPair> sorted = compressed.stream().sorted(Comparator.comparing(BPair::getArkLength)).collect(Collectors.toList());
                     return Writer.write(input.getHeading(),
                             input.getPrimaryStructure(),
                             sorted);
@@ -114,7 +121,7 @@ public class SingleSourceHandler {
                                 input.getPrimaryStructure(),
                                 sorted));
 /*                .thenApply(compressed -> {
-                    final List<BPair> sorted = compressed.stream().sorted(Comparator.comparing(BPair::getPair)).collect(Collectors.toList());
+                    final List<BPair> sorted = compressed.stream().sorted(Comparator.comparing(BPair::getArkLength)).collect(Collectors.toList());
                     return Writer.write(input.getHeading(),
                             input.getPrimaryStructure(),
                             sorted);
@@ -130,8 +137,9 @@ public class SingleSourceHandler {
                 .thenApply((components) -> ParallelComponentsWriter.write(components, fileName));*/
     }
 
-    private static CompletableFuture<?> getSizeThenWrite(ReaderOutput input) {
-        return null;
+    private static CompletableFuture<?> getSizeThenWrite(List<BPair> input, String primaryStructure, String fileName) {
+        return CompletableFuture.supplyAsync(() -> Sizes.fromPairs(input))
+                .thenApply((sizes) -> WBSizeWriter.write(fileName, primaryStructure, sizes));
     }
 
 

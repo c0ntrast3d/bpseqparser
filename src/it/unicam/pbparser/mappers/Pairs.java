@@ -41,6 +41,6 @@ public class Pairs {
         pair.setPair((short) -1);
     }
 
-    /* private static Function<BPair, Integer> pairIndex = (pair) -> pair.getPair() - 1; */
+    /* private static Function<BPair, Integer> pairIndex = (pair) -> pair.getArkLength() - 1; */
 
 }

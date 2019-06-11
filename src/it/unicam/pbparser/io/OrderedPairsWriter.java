@@ -1,6 +1,7 @@
 package it.unicam.pbparser.io;
 
 import it.unicam.pbparser.entities.BPair;
+import it.unicam.pbparser.utils.OutputFormatter;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -16,11 +17,8 @@ public class OrderedPairsWriter {
 
         String fileName = generateFileName(Paths.get(""), name, "-ass");
         Path directory = Paths.get(Paths.get("").toAbsolutePath().toString() + "/parser_output");
-        StringBuilder pairs = new StringBuilder();
-        list.forEach(pairs::append);
-        if (pairs.length() > 0) {
-            pairs.deleteCharAt(pairs.length() - 1);
-        }
+        String opOutput = OutputFormatter.format(list);
+
         try {
             System.out.println(String.format("WRITING ORDERED :: %s", Thread.currentThread().getName()));
             if (Files.notExists(directory)) {
@@ -28,7 +26,7 @@ public class OrderedPairsWriter {
             }
             Files.write(Paths.get(fileName), heading.concat("\n").getBytes());
             Files.write(Paths.get(fileName), primaryStructure.concat("\n\n").getBytes(), StandardOpenOption.APPEND);
-            Files.write(Paths.get(fileName), pairs.toString().getBytes(), StandardOpenOption.APPEND);
+            Files.write(Paths.get(fileName), opOutput.getBytes(), StandardOpenOption.APPEND);
             return true;
         } catch (IOException e) {
             e.printStackTrace();
