@@ -10,7 +10,7 @@ public class BPair {
     private char baseName;
     private short pair;
 
-    public int getPair() {
+    public short getPair() {
         return pair;
     }
 
@@ -22,12 +22,6 @@ public class BPair {
         this.index = index;
         this.baseName = baseName;
         this.pair = pair;
-    }
-
-    public BPair(BPair bpair) {
-        this.index = bpair.index;
-        this.baseName = bpair.baseName;
-        this.pair = bpair.pair;
     }
 
     @Override
