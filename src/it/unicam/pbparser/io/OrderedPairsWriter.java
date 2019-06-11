@@ -15,7 +15,7 @@ public class OrderedPairsWriter {
     public static boolean write(String name, String heading, String primaryStructure, List<BPair> list) {
 
         String fileName = generateFileName(Paths.get(""), name, "-ass");
-        Path directory = Paths.get(Paths.get("").toAbsolutePath().toString() + "/out");
+        Path directory = Paths.get(Paths.get("").toAbsolutePath().toString() + "/parser_output");
         StringBuilder pairs = new StringBuilder();
         list.forEach(pairs::append);
         if (pairs.length() > 0) {

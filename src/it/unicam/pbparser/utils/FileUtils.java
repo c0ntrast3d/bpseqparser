@@ -47,7 +47,7 @@ public class FileUtils {
         return new StringBuilder()
                 .append(Paths.get("").toAbsolutePath())
                 .append("/")
-                .append("out")
+                .append("parser_output")
                 .append("/")
                 .append(name)
                 .append(postfix)
